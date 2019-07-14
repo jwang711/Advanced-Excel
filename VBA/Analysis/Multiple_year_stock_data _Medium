@@ -1,0 +1,117 @@
+Sub stockanalysis()
+
+  ' Set an initial variable for holding the value
+  Dim Ticker As String
+  Dim Total As Double
+  Total = 0
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+  Dim openprice As Double
+  openprice_row = 2
+  Dim closeprice As Double
+  Dim yearly_change As Double
+  Dim percentage_change As Double
+  
+  ' Creat names for table
+  Cells(1, 9).Value = "Ticker"
+  Cells(1, 10).Value = "Yearly Change"
+  Cells(1, 11).Value = "Percent Change"
+  Cells(1, 12).Value = "Total Stock Volume"
+  
+
+  'Determine the last Row
+  lastrow = Cells(Rows.Count, 1).End(xlUp).Row
+
+  ' Loop through all tickers
+  For i = 2 To lastrow
+
+    ' Check if we are still within the same ticker name, if it is not...
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+      ' Set the ticker name
+      Ticker = Cells(i, 1).Value
+
+      ' Add to the Total volume
+      Total = Total + Cells(i, 7).Value
+      
+     ' determine closeprice & openprice
+      closeprice = Cells(i, 6).Value
+      openprice = Cells(openprice_row, 3).Value
+      
+      'determine yearly change
+      yearly_change = closeprice - openprice
+      
+      
+          If closeprice - openprice = 0 Then
+            percentage_change = 0
+      
+          ElseIf closeprice <> openprice Then
+             percentage_change = yearly_change / openprice
+
+          End If
+    
+    
+     ' Print the ticker name in the Summary Table
+      Range("I" & Summary_Table_Row).Value = Ticker
+
+      ' Print the total volume amount to the Summary Table
+       Range("J" & Summary_Table_Row).Value = yearly_change
+      
+      ' Print the total volume amount to the Summary Table
+       Range("K" & Summary_Table_Row).Value = percentage_change
+      
+       Range("K" & Summary_Table_Row).NumberFormat = "0.00%"
+      
+      ' Print the total volume amount to the Summary Table
+       Range("L" & Summary_Table_Row).Value = Total
+
+      ' Add row to the summary table to display the next ticker
+       Summary_Table_Row = Summary_Table_Row + 1
+      
+      ' and reset the Total volume
+      Total = 0
+      
+      'and reset the openprice row
+      openprice_row = i + 1
+
+    ' If the cell immediately following a row is the same ticker name
+    Else
+
+      ' Add to the Total volume
+      Total = Total + Cells(i, 7).Value
+      
+      End If
+      
+      Next i
+      
+        'Determine the last Row
+       lastrow_change = Cells(Rows.Count, "J").End(xlUp).Row
+
+      ' Loop through all tickers
+       For x = 2 To lastrow_change
+  
+      If Cells(x, 10).Value > 0 Then
+      
+    Cells(x, 10).Interior.ColorIndex = 10
+      
+      Else
+      
+    Cells(x, 10).Interior.ColorIndex = 3
+      
+      End If
+      
+    
+Next x
+
+End Sub
+
+
+
+
+
+
+
+
+
+
+
