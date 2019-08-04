@@ -1,4 +1,4 @@
-# Advanced Excel :octocat: :octocat: :octocat:
+# Advanced Excel :chipmunk:
 
 ## Table of Contents
 
