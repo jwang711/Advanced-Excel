@@ -1,4 +1,4 @@
-# advanced-excel
+# Advanced Excel :octocat:
 
 ## Table of Contents
 
